@@ -2,7 +2,8 @@ using NSE.Identity.API.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddApiConfiguration();
+builder.AddApiConfiguration()
+.AddApplicationDbContext();
 
 var app = builder.Build();
 

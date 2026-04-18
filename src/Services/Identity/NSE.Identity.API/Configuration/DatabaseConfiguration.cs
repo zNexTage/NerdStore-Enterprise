@@ -5,14 +5,18 @@ namespace NSE.Identity.API.Configuration
 {
     public static class DatabaseConfiguration
     {
-        public static IServiceCollection AddApplicationDbContext(this IServiceCollection services, string connectionString)
+        public static WebApplicationBuilder AddApplicationDbContext(this WebApplicationBuilder builder)
         {
-            services.AddDbContext<ApplicationDbContext>(opts =>
-            {
-                opts.UseSqlServer(connectionString);
-            });
+            var connectionString = builder.Configuration["DefaultConnection"];
 
-            return services;
+            builder.Services
+                .AddDbContext<ApplicationDbContext>(opts =>
+                {
+                    opts.UseSqlServer(connectionString);
+                })
+                .AddIdentity();
+
+            return builder;
         }
     }
 }

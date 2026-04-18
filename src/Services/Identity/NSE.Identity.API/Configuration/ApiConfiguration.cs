@@ -6,13 +6,7 @@
         {
             builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
-            var connectionString = builder.Configuration["DefaultConnection"];
-
-            builder.Services
-                .AddApplicationDbContext(connectionString)
-                .AddIdentity()
-                .AddControllers(); // Retorna um IMvcBuilder, logo não da para chamar o AddOpenApi
-
+            builder.Services.AddControllers(); 
             builder.Services.AddOpenApi();
 
             builder.Services.AddSwaggerGen(c =>
