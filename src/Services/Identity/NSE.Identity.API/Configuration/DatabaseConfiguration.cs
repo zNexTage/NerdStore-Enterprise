@@ -13,8 +13,7 @@ namespace NSE.Identity.API.Configuration
                 .AddDbContext<ApplicationDbContext>(opts =>
                 {
                     opts.UseSqlServer(connectionString);
-                })
-                .AddIdentity();
+                });
 
             return builder;
         }
