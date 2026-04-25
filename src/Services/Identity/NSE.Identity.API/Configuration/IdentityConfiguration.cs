@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using NSE.Identity.API.Data;
+using NSE.Identity.API.Extensions;
 using System.Text;
 
 namespace NSE.Identity.API.Configuration
@@ -18,10 +19,12 @@ namespace NSE.Identity.API.Configuration
     {
         public static WebApplicationBuilder AddIdentity(this WebApplicationBuilder builder)
         {
-            builder.Services.AddDefaultIdentity<IdentityUser>()
+            builder.Services
+                .AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddErrorDescriber<IdentityPortugueseMessages>();
 
             var authBuilder = builder.Services.AddAuthentication(options =>
             {

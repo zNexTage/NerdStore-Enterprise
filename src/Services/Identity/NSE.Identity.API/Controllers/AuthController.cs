@@ -6,12 +6,12 @@ using NSE.Identity.API.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NSE.Identity.API.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : Controller
+    public class AuthController : MainController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
@@ -27,7 +27,7 @@ namespace NSE.Identity.API.Controllers
         [HttpPost("nova-conta")]
         public async Task<ActionResult> Register(UserRegister userRegister)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var user = new IdentityUser
             {
@@ -40,20 +40,23 @@ namespace NSE.Identity.API.Controllers
 
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, false);
-
                 var token = await GerarJwt(user.Email);
 
-                return Ok(token);
+                return CustomResponse(token);
             }
 
-            return BadRequest();
+            foreach(var error in result.Errors)
+            {
+                AddError(error.Description);
+            }
+
+            return CustomResponse();
         }
 
         [HttpPost("login")]
         public async Task<ActionResult> Login(UserLogin userLogin)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var result = await _signInManager.PasswordSignInAsync(userLogin.Email, userLogin.Password, false, true);
 
@@ -61,10 +64,17 @@ namespace NSE.Identity.API.Controllers
             {
                 var token = await GerarJwt(userLogin.Email);
 
-                return Ok(token);
+                return CustomResponse(token);
             }
 
-            return BadRequest();
+            if(result.IsLockedOut)
+            {
+                AddError("Usuário temporariamente bloqueado por tentativas inválidas");
+                return CustomResponse();
+            }
+
+            AddError("Usuário e/ou senha incorretos.");
+            return CustomResponse();
         }
 
 
@@ -136,5 +146,7 @@ namespace NSE.Identity.API.Controllers
 
             return (claims, userRoles);
         }
+    
+        
     }
 }
