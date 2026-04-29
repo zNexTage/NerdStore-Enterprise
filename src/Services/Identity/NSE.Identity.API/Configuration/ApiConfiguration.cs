@@ -1,9 +1,18 @@
-﻿namespace NSE.Identity.API.Configuration
+﻿using Microsoft.Extensions.Configuration;
+
+namespace NSE.Identity.API.Configuration
 {
     public static class ApiConfiguration
     {
         public static WebApplicationBuilder AddApiConfiguration(this WebApplicationBuilder builder)
         {
+            builder
+                .Configuration
+                .SetBasePath(builder.Environment.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
+                .AddEnvironmentVariables();
+
             builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
             builder.Services.AddControllers(); 

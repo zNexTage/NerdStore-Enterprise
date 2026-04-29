@@ -8,7 +8,8 @@
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5292"
     },
-    "https": {
+
+    "https (selfhosting)": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -18,6 +19,41 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7128;http://localhost:5292"
     },
+
+    "IISExpress - dev": {
+      "commandName": "IISExpress",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7128;http://localhost:5292"
+    },
+
+    "IISExpress - hml": {
+      "commandName": "IISExpress",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Staging"
+      },
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7128;http://localhost:5292"
+    },
+
+    "IISExpress - prd": {
+      "commandName": "IISExpress",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      },
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7128;http://localhost:5292"
+    },
+
+
     "Container (Dockerfile)": {
       "commandName": "Docker",
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",

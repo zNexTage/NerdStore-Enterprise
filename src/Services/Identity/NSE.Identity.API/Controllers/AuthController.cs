@@ -77,13 +77,8 @@ namespace NSE.Identity.API.Controllers
             return CustomResponse();
         }
 
-
-        private async Task<UserLoginResponse> GerarJwt(string email)
+        private async Task<string> CreateToken(IdentityUser user, IList<Claim> claims, IList<string> userRoles)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-
-            (var claims, var userRoles) = await BuildClaimsAsync(user);
-
             var identityClaims = new ClaimsIdentity();
             identityClaims.AddClaims(claims);
 
@@ -100,7 +95,17 @@ namespace NSE.Identity.API.Controllers
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             });
 
-            var encodedToken = tokenHandler.WriteToken(token);
+            return tokenHandler.WriteToken(token);
+        }
+
+
+        private async Task<UserLoginResponse> GerarJwt(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            (var claims, var userRoles) = await BuildClaimsAsync(user);
+
+            var encodedToken = await CreateToken(user, claims, userRoles);
 
             return new UserLoginResponse()
             {
