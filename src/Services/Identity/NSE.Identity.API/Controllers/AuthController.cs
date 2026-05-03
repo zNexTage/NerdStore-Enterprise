@@ -77,7 +77,7 @@ namespace NSE.Identity.API.Controllers
             return CustomResponse();
         }
 
-        private async Task<string> CreateToken(IdentityUser user, IList<Claim> claims, IList<string> userRoles)
+        private string CreateToken(IdentityUser user, IList<Claim> claims, IList<string> userRoles)
         {
             var identityClaims = new ClaimsIdentity();
             identityClaims.AddClaims(claims);
@@ -105,7 +105,7 @@ namespace NSE.Identity.API.Controllers
 
             (var claims, var userRoles) = await BuildClaimsAsync(user);
 
-            var encodedToken = await CreateToken(user, claims, userRoles);
+            var encodedToken = CreateToken(user, claims, userRoles);
 
             return new UserLoginResponse()
             {
