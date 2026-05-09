@@ -1,10 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NSE.WebApp.MVC.Models;
+using NSE.WebApp.MVC.Services;
 
 namespace NSE.WebApp.MVC.Controllers
 {
+    
     public class AuthController : Controller
     {
+        private readonly IAuthService _authService;
+
+        public AuthController(IAuthService authService)
+        {
+            _authService = authService;
+        }
+
         [HttpGet]
         [Route("nova-conta")]
         public IActionResult Register() => View();
@@ -15,6 +24,7 @@ namespace NSE.WebApp.MVC.Controllers
         {
             if (!ModelState.IsValid) return View(userRegister);
 
+            var response = await _authService.Register(userRegister);
 
             return View();
         }
@@ -25,10 +35,11 @@ namespace NSE.WebApp.MVC.Controllers
 
         [HttpPost]
         [Route("login")]
-        public ActionResult Login(UserLogin userLogin)
+        public async Task<ActionResult> Login(UserLogin userLogin)
         {
             if (!ModelState.IsValid) return View(userLogin);
 
+            var response = await _authService.Login(userLogin);
 
             return View();
         }
