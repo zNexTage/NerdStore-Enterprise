@@ -8,7 +8,7 @@ namespace NSE.WebApp.MVC.Services
     {
         private readonly HttpClient _client = client;
 
-        public async Task<string> Login(UserLogin userLogin)
+        public async Task<UserLoginResponse> Login(UserLogin userLogin)
         {
             var content = JsonSerializer.Serialize(userLogin);
 
@@ -22,10 +22,15 @@ namespace NSE.WebApp.MVC.Services
 
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            return JsonSerializer.Deserialize<string>(responseContent);
+            var options = new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            return JsonSerializer.Deserialize<UserLoginResponse>(responseContent, options);
         }
 
-        public async Task<string> Register(UserRegister userRegister)
+        public async Task<UserLoginResponse> Register(UserRegister userRegister)
         {
             var content = JsonSerializer.Serialize(userRegister);
 
@@ -39,7 +44,7 @@ namespace NSE.WebApp.MVC.Services
 
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            return JsonSerializer.Deserialize<string>(responseContent);
+            return JsonSerializer.Deserialize<UserLoginResponse>(responseContent);
         }
     }
 }
