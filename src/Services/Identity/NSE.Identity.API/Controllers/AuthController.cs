@@ -127,13 +127,12 @@ namespace NSE.Identity.API.Controllers
 
         private async Task<(IList<Claim> Claims, IList<string> Roles)> BuildClaimsAsync(IdentityUser user)
         {
-            var claimsAsync = _userManager.GetClaimsAsync(user);
-            var userRolesAsync = _userManager.GetRolesAsync(user);
+            var claimsAsync = await _userManager.GetClaimsAsync(user);
+            var userRolesAsync = await _userManager.GetRolesAsync(user);
 
-            await Task.WhenAll(claimsAsync, userRolesAsync);
 
-            var claims = claimsAsync.Result;
-            var userRoles = userRolesAsync.Result;
+            var claims = claimsAsync;
+            var userRoles = userRolesAsync;
 
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
