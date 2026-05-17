@@ -6,7 +6,6 @@ using NSE.Identity.API.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NSE.Identity.API.Controllers
 {
@@ -45,7 +44,7 @@ namespace NSE.Identity.API.Controllers
                 return CustomResponse(token);
             }
 
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
             {
                 AddError(error.Description);
             }
@@ -67,7 +66,7 @@ namespace NSE.Identity.API.Controllers
                 return CustomResponse(token);
             }
 
-            if(result.IsLockedOut)
+            if (result.IsLockedOut)
             {
                 AddError("Usuário temporariamente bloqueado por tentativas inválidas");
                 return CustomResponse();
@@ -150,7 +149,7 @@ namespace NSE.Identity.API.Controllers
 
             return (claims, userRoles);
         }
-    
-        
+
+       
     }
 }

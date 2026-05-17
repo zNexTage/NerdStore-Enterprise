@@ -1,15 +1,19 @@
-﻿using NSE.WebApp.MVC.Services;
+﻿using NSE.WebApp.MVC.Extensions;
+using NSE.WebApp.MVC.Services;
 
 namespace NSE.WebApp.MVC.Configuration
 {
     public static class DependencyInjectionConfig
     {
-        public static void AddAuthttpClientService(this IServiceCollection services)
+        public static void AddServices(this IServiceCollection services)
         {
             services.AddHttpClient<IAuthService, AuthService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:44386");
+                client.BaseAddress = new Uri("https://localhost:7128");
             });
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<IUser, AppUser>();
         }
     }
 }

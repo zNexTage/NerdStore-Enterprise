@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMvcConfig();
 
-builder.Services.AddAuthttpClientService();
+builder.Services.AddServices();
 
 var app = builder.Build();
 

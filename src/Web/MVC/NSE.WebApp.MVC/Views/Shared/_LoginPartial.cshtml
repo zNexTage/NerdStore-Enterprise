@@ -1,10 +1,12 @@
 ﻿@using System.Security.Principal
+@using NSE.WebApp.MVC.Extensions
+@inject IUser AppUser
 
 <ul class="navbar-nav">
-    @if (User.Identity is not null && User.Identity.IsAuthenticated)
+    @if (AppUser.IsAuthenticated())
     {
         <li class="nav-item">
-            <span class="nav-link text-dark">Olá @User.Identity.Name!</span>
+            <span class="nav-link text-dark">Olá @AppUser.GetUserEmail()</span>
         </li>
 
         <li class="nav-item">
