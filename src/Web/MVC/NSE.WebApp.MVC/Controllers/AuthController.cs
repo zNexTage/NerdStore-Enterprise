@@ -30,6 +30,8 @@ namespace NSE.WebApp.MVC.Controllers
 
             var response = await _authService.Register(userRegister);
 
+            if (!response.IsValidResponse()) return View(userRegister);
+
             await Authenticate(response);
 
             return RedirectToAction("Index", ControllerName<HomeController>());
@@ -46,6 +48,8 @@ namespace NSE.WebApp.MVC.Controllers
             if (!ModelState.IsValid) return View(userLogin);
 
             var response = await _authService.Login(userLogin);
+
+            if(!response.IsValidResponse()) return View(userLogin);
 
             await Authenticate(response);
 

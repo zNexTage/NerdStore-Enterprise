@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace NSE.WebApp.MVC.Services
 {
-    public class AuthService(HttpClient client) : IAuthService
+    public class AuthService(HttpClient client) : Service, IAuthService
     {
         private readonly HttpClient _client = client;
 
@@ -14,33 +14,57 @@ namespace NSE.WebApp.MVC.Services
 
             var loginContent = new StringContent(content, Encoding.UTF8, "application/json");
 
-            var httpRequest = new HttpRequestMessage(HttpMethod.Post, "api/auth/login");
-            httpRequest.Content = loginContent;
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post, "api/auth/login")
+            {
+                Content = loginContent
+            };
             httpRequest.Headers.Add("Accept", "application/json");
 
             var response = await _client.SendAsync(httpRequest);
-
-            var responseContent = await response.Content.ReadAsStringAsync();
 
             var options = new JsonSerializerOptions()
             {
                 PropertyNameCaseInsensitive = true
             };
 
-            return JsonSerializer.Deserialize<UserLoginResponse>(responseContent, options);
+            if (!HandleResponse(response))
+            {
+                return new UserLoginResponse()
+                {
+                    ResponseResult = JsonSerializer.Deserialize<ResponseResult>(await response.Content.ReadAsStringAsync(), options)
+                };
+            }
+
+            return JsonSerializer.Deserialize<UserLoginResponse>(await response.Content.ReadAsStringAsync(), options);
         }
 
         public async Task<UserLoginResponse> Register(UserRegister userRegister)
         {
             var content = JsonSerializer.Serialize(userRegister);
 
-            var loginContent = new StringContent(content);
+            var loginContent = new StringContent(content, Encoding.UTF8, "application/json");
 
-            var httpRequest = new HttpRequestMessage(HttpMethod.Post, "api/auth/nova-conta");
-            httpRequest.Content = loginContent;
-            httpRequest.Headers.Add("Accept", "application/json");
+            var httpRequest = new HttpRequestMessage(
+                HttpMethod.Post, 
+                "api/auth/nova-conta")
+            {
+                Content = loginContent
+            };
 
             var response = await _client.SendAsync(httpRequest);
+
+            if(!HandleResponse(response))
+            {
+                var options = new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                return new UserLoginResponse()
+                {
+                    ResponseResult = JsonSerializer.Deserialize<ResponseResult>(await response.Content.ReadAsStringAsync(), options)
+                };
+            }
 
             var responseContent = await response.Content.ReadAsStringAsync();
 

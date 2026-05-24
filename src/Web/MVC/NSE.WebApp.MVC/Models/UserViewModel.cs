@@ -14,7 +14,7 @@ namespace NSE.WebApp.MVC.Models
 
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} a {1} caracteres.", MinimumLength = 5)]
-        public string PasswordConfirm { get; set; }
+        public string PasswordConfirmation { get; set; }
     }
 
     public class UserLogin
@@ -28,11 +28,12 @@ namespace NSE.WebApp.MVC.Models
         public string Password { get; set; }
     }
 
-    public class UserLoginResponse
+    public class UserLoginResponse : BaseResponse
     {
         public string AccessToken { get; set; }
         public double ExpiresIn { get; set; }
         public UserToken UserToken { get; set; }
+        
     }
 
     public class UserToken

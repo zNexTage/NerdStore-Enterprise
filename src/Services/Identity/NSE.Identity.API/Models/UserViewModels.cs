@@ -27,7 +27,7 @@ namespace NSE.Identity.API.Models
         public string Password { get; set; }
     }
 
-    public class UserLoginResponse
+    public class UserLoginResponse 
     {
         public string AccessToken { get; set; }
         public double ExpiresIn { get; set; }
