@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace NSE.WebApp.MVC.Controllers
 {
-    
+
     public class AuthController : MainController
     {
         private readonly IAuthService _authService;
@@ -30,7 +30,7 @@ namespace NSE.WebApp.MVC.Controllers
 
             var response = await _authService.Register(userRegister);
 
-            if (!response.IsValidResponse()) return View(userRegister);
+            if (!response.IsValidResponse()) return ProcessInvalidResponse(response, userRegister);
 
             await Authenticate(response);
 
@@ -49,7 +49,7 @@ namespace NSE.WebApp.MVC.Controllers
 
             var response = await _authService.Login(userLogin);
 
-            if(!response.IsValidResponse()) return View(userLogin);
+            if (!response.IsValidResponse()) return ProcessInvalidResponse(response, userLogin);
 
             await Authenticate(response);
 
@@ -58,7 +58,8 @@ namespace NSE.WebApp.MVC.Controllers
 
         [HttpGet]
         [Route("sair")]
-        public ActionResult Logout() {
+        public ActionResult Logout()
+        {
             return RedirectToAction("Index", ControllerName<HomeController>());
         }
 

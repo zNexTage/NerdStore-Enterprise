@@ -53,17 +53,19 @@ namespace NSE.WebApp.MVC.Services
 
             var response = await _client.SendAsync(httpRequest);
 
-            if(!HandleResponse(response))
+            if (!HandleResponse(response))
             {
                 var options = new JsonSerializerOptions()
                 {
                     PropertyNameCaseInsensitive = true
                 };
 
-                return new UserLoginResponse()
+                var loginResponse = new UserLoginResponse()
                 {
                     ResponseResult = JsonSerializer.Deserialize<ResponseResult>(await response.Content.ReadAsStringAsync(), options)
                 };
+
+                return loginResponse;
             }
 
             var responseContent = await response.Content.ReadAsStringAsync();
