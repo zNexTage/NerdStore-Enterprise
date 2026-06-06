@@ -27,7 +27,9 @@ namespace NSE.WebApp.MVC.Extensions
         {
             if(httpException.StatusCode== System.Net.HttpStatusCode.Unauthorized)
             {
-                context.Response.Redirect("/login");
+                var returnUrl = context.Request.Path + context.Request.QueryString;
+
+                context.Response.Redirect($"/login?returnUrl={Uri.EscapeDataString(returnUrl)}");
                 return;
             }
 

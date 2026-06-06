@@ -1,4 +1,6 @@
 ﻿using NSE.WebApp.MVC.Exceptions;
+using System.Text;
+using System.Text.Json;
 
 namespace NSE.WebApp.MVC.Services
 {
@@ -18,6 +20,25 @@ namespace NSE.WebApp.MVC.Services
 
             response.EnsureSuccessStatusCode();
             return true;
+        }
+
+        protected StringContent Serialize(object data)
+        {
+            return new StringContent(
+                JsonSerializer.Serialize(data),
+                Encoding.UTF8,
+                "application/json"
+            );
+        }
+
+        protected async Task<T> Deserialize<T>(HttpResponseMessage httpResponseMessage)
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            return JsonSerializer.Deserialize<T>(await httpResponseMessage.Content.ReadAsStringAsync(), options);
         }
     }
 }
