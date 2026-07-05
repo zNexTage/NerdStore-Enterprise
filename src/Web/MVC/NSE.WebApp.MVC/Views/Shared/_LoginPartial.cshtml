@@ -2,29 +2,28 @@
 @using NSE.WebApp.MVC.Extensions
 @inject IUser AppUser
 
-<ul class="navbar-nav">
-    @if (AppUser.IsAuthenticated())
-    {
-        <li class="nav-item">
-            <span class="nav-link text-dark">Olá @AppUser.GetUserEmail()</span>
-        </li>
+@if (AppUser.IsAuthenticated())
+{
+    <div class="dropdown d-inline-block">
+        <a href="#" class="icontext dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <img class="icon icon-sm rounded-circle" src="https://s.gravatar.com/avatar/@this.HashEmailForGravatar(AppUser.GetUserEmail())?d=mm&s=45">
+        </a> <!-- iconbox // -->
+        <div class="dropdown-menu dropdown-menu-left" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 12px; left: 91px; transform: translate3d(150px, 32px, 0px);">
+            <a class="dropdown-item" href="#">Meu Perfil</a>
+            <a class="dropdown-item" href="#">Meus Pedidos</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Sair</a>
+        </div>
+    </div>
+}
+else
+{
 
-        <li class="nav-item">
-            Logout
-        </li>
-    }
-    else
-    {
-
-        <li class="nav-item me-1">
-            <a class="btn btn-outline-success" asp-controller="Auth" asp-action="Register">
-                Registrar
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="btn btn-outline-primary" asp-controller="Auth" asp-action="Login">
-                Login
-            </a>
-        </li>
-    }
-</ul>
+    <div class="widget-header">
+        <small class="title text-muted">Bem vindo!</small>
+        <div>
+            <a asp-controller="Auth" asp-action="Register">Crie sua conta</a> <span> | </span>
+            <a asp-controller="Auth" asp-action="Login"> Login</a>
+        </div>
+    </div>
+}
