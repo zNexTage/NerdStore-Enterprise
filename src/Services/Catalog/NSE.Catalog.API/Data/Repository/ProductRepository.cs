@@ -45,7 +45,7 @@ namespace NSE.Catalog.API.Data.Repository
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
