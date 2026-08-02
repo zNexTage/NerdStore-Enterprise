@@ -14,9 +14,9 @@ namespace NSE.Identity.API.Controllers
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly Configuration.IdentityOptions _identityOpts;
+        private readonly NSE.WebApi.Core.Identity.IdentityOptions _identityOpts;
 
-        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<Configuration.IdentityOptions> identityOpts)
+        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<NSE.WebApi.Core.Identity.IdentityOptions> identityOpts)
         {
             _signInManager = signInManager;
             _userManager = userManager;

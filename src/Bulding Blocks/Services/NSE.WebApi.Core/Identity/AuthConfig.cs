@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using NSE.Identity.API.Data;
-using NSE.Identity.API.Extensions;
+using NSE.WebApi.Core.Database;
+using NSE.WebApi.Core.Globalization;
 using System.Text;
 
-namespace NSE.Identity.API.Configuration
+namespace NSE.WebApi.Core.Identity
 {
     public class IdentityOptions
     {
@@ -15,25 +17,25 @@ namespace NSE.Identity.API.Configuration
         public string ValidIn { get; set; }
     }
 
-    public static class IdentityConfiguration
+    public static class AuthConfig
     {
-        public static WebApplicationBuilder AddIdentity(this WebApplicationBuilder builder)
+        public static IServiceCollection AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            builder.Services
+            services
                 .AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
                 .AddErrorDescriber<IdentityPortugueseMessages>();
 
-            var authBuilder = builder.Services.AddAuthentication(options =>
+            var authBuilder = services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             });
 
-            var authSection = builder.Configuration.GetSection("AuthenticationSettings");
-            builder.Services.Configure<IdentityOptions>(authSection);
+            var authSection = configuration.GetSection("AuthenticationSettings");
+            services.Configure<IdentityOptions>(authSection);
 
             var authSettings = authSection.Get<IdentityOptions>();
             var audience = authSettings.ValidIn;
@@ -57,7 +59,7 @@ namespace NSE.Identity.API.Configuration
                 };
             });
 
-            return builder;
+            return services;
         }
     }
 }

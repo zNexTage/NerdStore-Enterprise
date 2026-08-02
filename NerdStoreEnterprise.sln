@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37111.16 d17.14
+VisualStudioVersion = 17.14.37111.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -45,6 +45,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSE.Order.API", "src\Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSE.Payment.API", "src\Services\Payment\NSE.Payment.API\NSE.Payment.API.csproj", "{EA0125C0-DD9C-4CEB-9A6E-487195898C25}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{DC94AF82-238A-4DAB-81B8-3F921B503A7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSE.WebApi.Core", "src\Bulding Blocks\Services\NSE.WebApi.Core\NSE.WebApi.Core.csproj", "{3C1C7A42-471E-4DE5-8207-903A1CE7A5E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +87,10 @@ Global
 		{EA0125C0-DD9C-4CEB-9A6E-487195898C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA0125C0-DD9C-4CEB-9A6E-487195898C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA0125C0-DD9C-4CEB-9A6E-487195898C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C1C7A42-471E-4DE5-8207-903A1CE7A5E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C1C7A42-471E-4DE5-8207-903A1CE7A5E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C1C7A42-471E-4DE5-8207-903A1CE7A5E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C1C7A42-471E-4DE5-8207-903A1CE7A5E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +115,8 @@ Global
 		{23677802-FAE5-4784-8DB2-83F3A73DBD0D} = {E84E93D8-85AD-4E19-AC82-C3AA2663CD44}
 		{3BB5D065-3297-4033-A454-7B847F4BCD8C} = {9770159A-9439-4AD9-84AD-2B53D6D9C8E4}
 		{EA0125C0-DD9C-4CEB-9A6E-487195898C25} = {7CBA708A-02A5-4134-BC2D-3E66A68EB31D}
+		{DC94AF82-238A-4DAB-81B8-3F921B503A7E} = {ACA53A8E-CA1A-45C6-8710-544E6810CDD1}
+		{3C1C7A42-471E-4DE5-8207-903A1CE7A5E3} = {DC94AF82-238A-4DAB-81B8-3F921B503A7E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B372602-E883-426B-876F-F70202588B8D}
